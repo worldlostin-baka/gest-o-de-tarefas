@@ -1,55 +1,49 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2 } from 'lucide-react'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Loader2 } from 'lucide-react';
 
-const Login = ({ onLogin }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+const Login = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
-        onLogin(data.user, data.token)
+      if (response.ok && data.status === "ok") {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        navigate('/dashboard'); // Redireciona para a página de dashboard
       } else {
-        setError(data.message || 'Erro ao fazer login')
+        setError(data.message || 'Erro ao fazer login');
       }
     } catch (err) {
-      setError('Erro de conexão com o servidor')
+      setError('Erro de conexão com o servidor');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -110,8 +104,7 @@ const Login = ({ onLogin }) => {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;

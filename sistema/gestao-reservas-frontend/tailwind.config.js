@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/components/ui/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {},
   },
-  plugins: [],
-}
-
+  plugins: [
+    // Remova require('tailwindcss-animate')
+  ],
+};
