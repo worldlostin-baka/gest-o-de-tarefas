@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🚀 Rodando testes backend..."
+cd ../gestao-reservas-backend
+python manage.py test || exit 1
+cd ../gestao-reservas-frontend
+
+echo "🚀 Rodando testes frontend..."
+npm run test -- --run || exit 1

@@ -1,0 +1,10 @@
+Arquivos ajustados:
+- projeto.ps1 :: replaced with robust menu using -WorkingDirectory
+- frontend/tailwind.config.js :: set correct content globs
+- frontend/postcss.config.js :: ESM export default
+- frontend/src/index.css :: ensured tailwind directives
+- frontend/.env :: set VITE_API_URL
+- frontend/src/services/api.js :: kept existing (already present)
+- frontend/package.json :: ensured vite/tailwind deps + scripts
+- backend/create_superuser.py :: added
+- backend/settings.py :: updated CORS_ALLOWED_ORIGINS
